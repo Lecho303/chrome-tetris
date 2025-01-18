@@ -31,4 +31,8 @@
 
 - HTML5 Canvas
 - 原生 JavaScript
+<<<<<<< HEAD
 - Chrome Extension API 
+=======
+- Chrome Extension API 
+>>>>>>> 849465a15f769ced8c5fbd91a374a79672aa0ff5
