@@ -4,15 +4,20 @@ class GameStorage {
     }
 
     static setHighScore(score) {
-        localStorage.setItem('tetris_highScore', score.toString());
+        const currentHighScore = this.getHighScore();
+        if (score > currentHighScore) {
+            localStorage.setItem('tetris_highScore', score.toString());
+            return true;
+        }
+        return false;
     }
 
     static getSettings() {
         try {
             const settings = JSON.parse(localStorage.getItem('tetris_settings'));
-            return settings || { soundEnabled: true };
+            return settings || { soundEnabled: true, musicEnabled: true };
         } catch (e) {
-            return { soundEnabled: true };
+            return { soundEnabled: true, musicEnabled: true };
         }
     }
 
@@ -24,4 +29,4 @@ class GameStorage {
         localStorage.removeItem('tetris_highScore');
         localStorage.removeItem('tetris_settings');
     }
-} 
+}

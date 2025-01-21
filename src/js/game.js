@@ -261,7 +261,7 @@ class Game {
         this.canHold = true;
         
         // 检查是否需要更新最高分
-        if (Storage.saveHighScore(this.board.getScore())) {
+        if (GameStorage.setHighScore(this.board.getScore())) {
             this.updateHighScore();
         }
         
@@ -416,28 +416,28 @@ class Game {
     }
 
     updateHighScore() {
-        const highScore = Storage.getHighScore() || 0;
+        const highScore = GameStorage.getHighScore() || 0;
         if (this.highScoreElement) {
             this.highScoreElement.textContent = highScore;
         }
     }
 
     loadSettings() {
-        const settings = Storage.getSettings();
+        const settings = GameStorage.getSettings();
         document.getElementById('sound-toggle').checked = settings.soundEnabled;
         document.getElementById('music-toggle').checked = settings.musicEnabled;
 
         // 绑定设置变更事件
         document.getElementById('sound-toggle').addEventListener('change', (e) => {
-            const settings = Storage.getSettings();
+            const settings = GameStorage.getSettings();
             settings.soundEnabled = e.target.checked;
-            Storage.saveSettings(settings);
+            GameStorage.setSettings(settings);
         });
 
         document.getElementById('music-toggle').addEventListener('change', (e) => {
-            const settings = Storage.getSettings();
+            const settings = GameStorage.getSettings();
             settings.musicEnabled = e.target.checked;
-            Storage.saveSettings(settings);
+            GameStorage.setSettings(settings);
         });
     }
 } 
