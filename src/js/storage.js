@@ -1,44 +1,27 @@
-class Storage {
-    static KEY_HIGH_SCORE = 'tetris_high_score';
-    static KEY_SETTINGS = 'tetris_settings';
-
-    static saveHighScore(score) {
-        const currentHighScore = this.getHighScore();
-        if (score > currentHighScore) {
-            localStorage.setItem(this.KEY_HIGH_SCORE, score.toString());
-            return true;
-        }
-        return false;
-    }
-
+class GameStorage {
     static getHighScore() {
-        return parseInt(localStorage.getItem(this.KEY_HIGH_SCORE) || '0');
+        return parseInt(localStorage.getItem('tetris_highScore')) || 0;
     }
 
-    static saveSettings(settings) {
-        localStorage.setItem(this.KEY_SETTINGS, JSON.stringify(settings));
+    static setHighScore(score) {
+        localStorage.setItem('tetris_highScore', score.toString());
     }
 
     static getSettings() {
-        const defaultSettings = {
-            soundEnabled: true,
-            musicEnabled: true
-        };
-
-        const savedSettings = localStorage.getItem(this.KEY_SETTINGS);
-        if (!savedSettings) {
-            return defaultSettings;
-        }
-
         try {
-            return {...defaultSettings, ...JSON.parse(savedSettings)};
+            const settings = JSON.parse(localStorage.getItem('tetris_settings'));
+            return settings || { soundEnabled: true };
         } catch (e) {
-            return defaultSettings;
+            return { soundEnabled: true };
         }
     }
 
+    static setSettings(settings) {
+        localStorage.setItem('tetris_settings', JSON.stringify(settings));
+    }
+
     static clearAll() {
-        localStorage.removeItem(this.KEY_HIGH_SCORE);
-        localStorage.removeItem(this.KEY_SETTINGS);
+        localStorage.removeItem('tetris_highScore');
+        localStorage.removeItem('tetris_settings');
     }
 } 
